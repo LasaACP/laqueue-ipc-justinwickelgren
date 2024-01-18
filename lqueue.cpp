@@ -116,6 +116,14 @@ int lq_send (lqd_t __msgid, const char *__msg, size_t __msg_len, unsigned int __
 	mylock.unlock();
 	return 0;
 }
+int lq_timedsend(lqd_t mqdes, const char *msg_ptr, size_t msg_len, unsigned msg_prio, int timeout) {
+  time_t startTime = time(0);
+  int finished = -1;
+  while ((finished == -1) && (time(0) - startTime < timeout)) {
+    finished = lq_send(mqdes, msg_ptr, msg_len, msg_prio);
+  }
+  return finished;
+}
 ssize_t lq_receive (lqd_t __msgid, char *__msg, size_t __msg_len, unsigned int *__msg_prio)
 {
 	ssize_t len = 0;

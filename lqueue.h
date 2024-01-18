@@ -17,26 +17,33 @@
 typedef int lqd_t;
 
 struct lq_attr {
-  long lq_flags;    /* message queue flags */
-  long lq_maxmsg;   /* maximum number of messages */
-  long lq_msgsize;  /* maximum message size */
-  long lq_curmsgs;  /* number of messages currently queued */
+  long lq_flags;   /* message queue flags */
+  long lq_maxmsg;  /* maximum number of messages */
+  long lq_msgsize; /* maximum message size */
+  long lq_curmsgs; /* number of messages currently queued */
 };
 
 #define lq_PRIO_MAX 16
 
 /* prototypes */
-//lqd_t lq_open (const char *__name, int __oflag, ...);
-lqd_t lq_open (const char *__name, int __oflag);
-lqd_t lq_open (const char *__name, int __oflag, int mode, lq_attr *attr);
+// lqd_t lq_open (const char *__name, int __oflag, ...);
+lqd_t lq_open(const char *__name, int __oflag);
+lqd_t lq_open(const char *__name, int __oflag, int mode, lq_attr *attr);
 
-int lq_close (lqd_t __msgid);
-int lq_send (lqd_t __msgid, const char *__msg, size_t __msg_len, unsigned int __msg_prio);
-//ssize_t lq_receive (lqd_t __msgid, char *__msg, size_t __msg_len, unsigned int *__msg_prio);
-ssize_t lq_receive (lqd_t __msgid, char *__msg, size_t __msg_len, unsigned int *__msg_prio);
-int lq_notify (lqd_t __msgid, const struct sigevent *__notification);
-int lq_unlink (const char *__name);
-int lq_getattr (lqd_t __msgid, struct lq_attr *__mqstat);
-int lq_setattr (lqd_t __msgid, const struct lq_attr *__mqstat, struct lq_attr *__omqattr);
+int lq_close(lqd_t __msgid);
+int lq_send(lqd_t __msgid, const char *__msg, size_t __msg_len,
+            unsigned int __msg_prio);
+int lq_timedsend(lqd_t mqdes, const char *msg_ptr, size_t msg_len,
+                 unsigned msg_prio,
+                 int timeout);
+// ssize_t lq_receive (lqd_t __msgid, char *__msg, size_t __msg_len, unsigned
+// int *__msg_prio);
+ssize_t lq_receive(lqd_t __msgid, char *__msg, size_t __msg_len,
+                   unsigned int *__msg_prio);
+int lq_notify(lqd_t __msgid, const struct sigevent *__notification);
+int lq_unlink(const char *__name);
+int lq_getattr(lqd_t __msgid, struct lq_attr *__mqstat);
+int lq_setattr(lqd_t __msgid, const struct lq_attr *__mqstat,
+               struct lq_attr *__omqattr);
 
 #endif /* __LQUEUE_H */

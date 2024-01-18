@@ -10,6 +10,8 @@
  * 
  * */
 
+#include <cstddef>
+
 struct node
 {
 	int priority;
